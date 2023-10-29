@@ -13,15 +13,17 @@ export class OpenAI {
 
   public async generateMessage(
     message: string
-  ): Promise<string | undefined> {
+  ): Promise<any | undefined> {
     const data = JSON.stringify({
-      prompt: `次の日本語のテキストを英語に翻訳してください：${message}`,
-      model: "gpt-3.5-turbo-instruct",
+      messages: [
+        {"role": "user", "content": `次の日本語の英語に翻訳してください${message}`}
+    ],
+      model: "gpt-3.5-turbo",
       max_tokens: 12,
-      temperature: 0.9,
+      temperature: 0,
       stop: "\n",
     });
-    const apiResp = await fetch(`${this.baseUrl}/v1/completions`, {
+    const apiResp = await fetch(`${this.baseUrl}/v1/chat/completions`, {
       method: "POST",
       headers: this.headers,
       body: data,
@@ -34,6 +36,7 @@ export class OpenAI {
 
     if (!apiResp) return "";
 
-    return apiResp.choices.map((choice) => choice.text.trim())[0]
+    console.log()
+    return apiResp.choices.map((choice) => choice.message.content)
   }
 }

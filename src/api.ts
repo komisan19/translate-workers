@@ -15,7 +15,6 @@ app.post("/api/v1/translate", async (c) => {
   try {
     const openaiClient = new OpenAI(env);
     const generatedMessage = await openaiClient.generateMessage(body.prompt);
-    console.log(generatedMessage)
     if (!generatedMessage || generatedMessage === "")
       throw new Error("No message generated");
     return c.json({ status: "200", messages: generatedMessage });

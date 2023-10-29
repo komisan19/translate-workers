@@ -8,7 +8,7 @@ export type OpenAiApiResponse = {
   };
 
   type Choice = {
-    text: string;
+    message: any;
     index: number;
     logprobs: null;
     finish_reason: string;
